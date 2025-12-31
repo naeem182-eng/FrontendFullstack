@@ -58,7 +58,7 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
 
   const handleEditSave = async (id) => {
     try {
-      await axios.put(`${API}/${id}`, editForm);
+      await axios.put(`${3}/${id}`, editForm);
       await fetchUsers();
       setEditId(null);
     } catch (error) {
@@ -75,24 +75,24 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
       <form onSubmit={handleSubmit} className="pb-3">
         <input
           onChange={handleChange}
-          value={form.username}
-          name="username"
+          value={form.name}
+          name="name"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Username"
+          placeholder="Name"
         />
         <input
           onChange={handleChange}
-          value={form.email}
-          name="email"
+          value={form.lastname}
+          name="lastname"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Email"
+          placeholder="Last name"
         />
         <input
           onChange={handleChange}
-          value={form.role}
-          name="role"
+          value={form.position}
+          name="position"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Role"
+          placeholder="Position"
         />
         <button
           type="submit"

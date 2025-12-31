@@ -4,8 +4,8 @@ import { AdminTable } from "../components/AdminTable";
 import axios from "axios";
 
 // const API = "https://67eca027aa794fb3222e43e2.mockapi.io/members";
+// const API = "http://localhost:3000/api/v2/users";
 const API = import.meta.env.VITE_API_URL;
-
 
 export default function Home() {
   const [view, setView] = useState(null);
