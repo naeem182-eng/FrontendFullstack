@@ -3,16 +3,17 @@ import { useState } from "react";
 
 export function AdminTable({ users, setUsers, fetchUsers, API }) {
   const [form, setForm] = useState({
-    name: "",
-    lastname: "",
-    position: "",
+    username: "",
+    email: "",
+    role: "",
+    password: "",
   });
 
   const [editId, setEditId] = useState(null);
   const [editForm, setEditForm] = useState({
-    name: "",
-    lastname: "",
-    position: "",
+    username: "",
+    email: "",
+    role: "",
   });
 
   const handleChange = (e) => {
@@ -30,9 +31,10 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
       await fetchUsers();
       // Reset the form
       setForm({
-        name: "",
-        lastname: "",
-        position: "",
+        username: "",
+        email: "",
+        role: "",
+        password: "",
       });
     } catch (error) {
       console.error("Error creating user:", error);
@@ -42,15 +44,15 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this user?")) return;
     await axios.delete(`${API}/${id}`);
-    setUsers(users.filter((user) => user.id !== id));
+    setUsers(users.filter((user) => user._id !== id));
   };
 
   const handleEdit = (user) => {
-    setEditId(user.id);
+    setEditId(user._id);
     setEditForm({
-      name: user.name,
-      lastname: user.lastname,
-      position: user.position,
+      username: user.username,
+      email: user.email,
+      role: user.role,
     });
   };
 
@@ -73,24 +75,24 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
       <form onSubmit={handleSubmit} className="pb-3">
         <input
           onChange={handleChange}
-          value={form.name}
-          name="name"
+          value={form.username}
+          name="username"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Name"
+          placeholder="Username"
         />
         <input
           onChange={handleChange}
-          value={form.lastname}
-          name="lastname"
+          value={form.email}
+          name="email"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Last name"
+          placeholder="Email"
         />
         <input
           onChange={handleChange}
-          value={form.position}
-          name="position"
+          value={form.role}
+          name="role"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Position"
+          placeholder="Role"
         />
         <button
           type="submit"
@@ -102,44 +104,44 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
       <table className="w-full border-separate">
         <thead>
           <tr className="text-center font-bold bg-gray-200">
-            <th className="border rounded-tl-lg p-2">Name</th>
-            <th className="border p-2">Last name</th>
-            <th className="border p-2">Position</th>
+            <th className="border rounded-tl-lg p-2">Username</th>
+            <th className="border p-2">Email</th>
+            <th className="border p-2">Role</th>
             <th className="border rounded-tr-lg p-2">Action</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user) => (
-            <tr key={user.id} className="bg-white">
-              {editId === user.id ? (
+            <tr key={user._id} className="bg-white">
+              {editId === user._id ? (
                 <>
                   <td className="border p-2 ">
                     <input
-                      value={editForm.name}
+                      value={editForm.username}
                       onChange={handleEditChange}
-                      name="name"
+                      name="username"
                       className="bg-white w-24 px-2 rounded border"
                     />
                   </td>
                   <td className="border p-2 ">
                     <input
-                      value={editForm.lastname}
+                      value={editForm.email}
                       onChange={handleEditChange}
-                      name="lastname"
+                      name="email"
                       className="bg-white w-24 px-2 rounded border"
                     />
                   </td>
                   <td className="border p-2 ">
                     <input
-                      value={editForm.position}
+                      value={editForm.role}
                       onChange={handleEditChange}
-                      name="position"
+                      name="role"
                       className="bg-white w-24 px-2 rounded border"
                     />
                   </td>
                   <td className="border p-2 ">
                     <button
-                      onClick={() => handleEditSave(user.id)}
+                      onClick={() => handleEditSave(user._id)}
                       className="cursor-pointer bg-teal-400 hover:bg-teal-500 text-white px-2 rounded-xl"
                     >
                       Save
@@ -154,9 +156,9 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
                 </>
               ) : (
                 <>
-                  <td className="border p-2 ">{user.name}</td>
-                  <td className="border p-2 ">{user.lastname}</td>
-                  <td className="border p-2 ">{user.position}</td>
+                  <td className="border p-2 ">{user.username}</td>
+                  <td className="border p-2 ">{user.email}</td>
+                  <td className="border p-2 ">{user.role}</td>
                   <td className="border p-2 ">
                     <button
                       onClick={() => handleEdit(user)}
@@ -165,7 +167,7 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(user.id)}
+                      onClick={() => handleDelete(user._id)}
                       className="cursor-pointer bg-rose-400 hover:bg-rose-500 text-white px-2 rounded-xl"
                     >
                       Delete
