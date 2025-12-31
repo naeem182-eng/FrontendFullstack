@@ -58,11 +58,11 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
 
   const handleEditSave = async (id) => {
     try {
-      await axios.put(`${3}/${id}`, editForm);
+      await axios.patch(`${API}/${id}`, editForm);
       await fetchUsers();
       setEditId(null);
     } catch (error) {
-      console.error("Error updating member:", error);
+      console.error(error.response.data);
     }
   };
 
@@ -70,29 +70,36 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
     setEditId(null);
   };
 
+  
   return (
     <div className="flex flex-col items-center">
-      <form onSubmit={handleSubmit} className="pb-3">
+      <form onSubmit={handleSubmit} className="pb-3 flex flex-wrap gap-2 justify-center">
         <input
           onChange={handleChange}
-          value={form.name}
-          name="name"
+          value={form.username}
+          name="username"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Name"
+          placeholder="Username"
         />
         <input
           onChange={handleChange}
-          value={form.lastname}
-          name="lastname"
+          value={form.email}
+          name="email"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Last name"
+          placeholder="Email"
+        /> <input
+          onChange={handleChange}
+          value={form.password}
+          name="password"
+          className="bg-white mx-1 w-32 px-2 rounded border"
+          placeholder="Password"
         />
         <input
           onChange={handleChange}
-          value={form.position}
-          name="position"
+          value={form.role}
+          name="role"
           className="bg-white mx-1 w-32 px-2 rounded border"
-          placeholder="Position"
+          placeholder="Role"
         />
         <button
           type="submit"
