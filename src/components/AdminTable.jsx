@@ -56,7 +56,7 @@ export function AdminTable({ users, setUsers, fetchUsers, API }) {
 
   const handleEditSave = async (id) => {
     try {
-      await axios.put(`${3}/${id}`, editForm);
+      await axios.put(`${API}/${id}`, editForm);
       await fetchUsers();
       setEditId(null);
     } catch (error) {
